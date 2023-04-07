@@ -1,0 +1,12 @@
+[package]
+name = "test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anvil = { git = "https://github.com/foundry-rs/foundry" }
+ethers = { version = "2.0.2", features = ["rustls", "eip712", "ws"] }
+
+[build-dependencies]
+ethers-solc = "2.0.2"
+ethers-contract-abigen = "2.0.2"
