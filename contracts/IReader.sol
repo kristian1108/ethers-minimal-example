@@ -6,57 +6,52 @@ interface IReader {
         PoolStorage pool;
         AssetStorage[] assets;
         DexStorage[] dexes;
-        uint32 liquidityLockPeriod; // 1e0
-        uint32 marketOrderTimeout; // 1e0
-        uint32 maxLimitOrderTimeout; // 1e0
-        uint256 lpDeduct; // MLP totalSupply = PRE_MINED - Σ_chains lpDeduct
-        uint256 stableDeduct; // debt of stable coins = PRE_MINED - Σ_chains stableDeduct
+        uint32 liquidityLockPeriod;
+        uint32 marketOrderTimeout;
+        uint32 maxLimitOrderTimeout;
+        uint256 lpDeduct;
+        uint256 stableDeduct;
         bool isPositionOrderPaused;
         bool isLiquidityOrderPaused;
     }
 
     struct PoolStorage {
-        uint32 shortFundingBaseRate8H; // 1e5
-        uint32 shortFundingLimitRate8H; // 1e5
-        uint32 fundingInterval; // 1e0
-        uint32 liquidityBaseFeeRate; // 1e5
-        uint32 liquidityDynamicFeeRate; // 1e5
+        uint32 shortFundingBaseRate8H;
+        uint32 shortFundingLimitRate8H;
+        uint32 fundingInterval;
+        uint32 liquidityBaseFeeRate;
+        uint32 liquidityDynamicFeeRate;
         uint96 mlpPriceLowerBound;
         uint96 mlpPriceUpperBound;
-        uint32 lastFundingTime; // 1e0
-        uint32 sequence; // 1e0. note: will be 0 after 0xffffffff
-        uint32 strictStableDeviation; // 1e5
+        uint32 lastFundingTime;
+        uint32 sequence;
+        uint32 strictStableDeviation;
     }
 
     struct AssetStorage {
-        // assets with the same symbol in different chains are the same asset. they shares the same muxToken. so debts of the same symbol
-        // can be accumulated across chains (see Reader.AssetState.deduct). ex: ERC20(fBNB).symbol should be "BNB", so that BNBs of
-        // different chains are the same.
-        // since muxToken of all stable coins is the same and is calculated separately (see Reader.ChainState.stableDeduct), stable coin
-        // symbol can be different (ex: "USDT", "USDT.e" and "fUSDT").
         bytes32 symbol;
-        address tokenAddress; // erc20.address
-        address muxTokenAddress; // muxToken.address. all stable coins share the same muxTokenAddress
+        address tokenAddress;
+        address muxTokenAddress;
         uint8 id;
-        uint8 decimals; // erc20.decimals
-        uint56 flags; // a bitset of ASSET_*
-        uint32 initialMarginRate; // 1e5
-        uint32 maintenanceMarginRate; // 1e5
-        uint32 positionFeeRate; // 1e5
-        uint32 liquidationFeeRate; // 1e5
-        uint32 minProfitRate; // 1e5
-        uint32 minProfitTime; // 1e0
+        uint8 decimals;
+        uint56 flags;
+        uint32 initialMarginRate;
+        uint32 maintenanceMarginRate;
+        uint32 positionFeeRate;
+        uint32 liquidationFeeRate;
+        uint32 minProfitRate;
+        uint32 minProfitTime;
         uint96 maxLongPositionSize;
         uint96 maxShortPositionSize;
         uint32 spotWeight;
-        uint32 longFundingBaseRate8H; // 1e5
-        uint32 longFundingLimitRate8H; // 1e5
+        uint32 longFundingBaseRate8H;
+        uint32 longFundingLimitRate8H;
         uint8 referenceOracleType;
         address referenceOracle;
         uint32 referenceDeviation;
         uint32 halfSpread;
-        uint128 longCumulativeFundingRate; // Σ_t fundingRate_t
-        uint128 shortCumulativeFunding; // Σ_t fundingRate_t * indexPrice_t
+        uint128 longCumulativeFundingRate;
+        uint128 shortCumulativeFunding;
         uint96 spotLiquidity;
         uint96 credit;
         uint96 totalLongPosition;
@@ -64,7 +59,7 @@ interface IReader {
         uint96 averageLongPrice;
         uint96 averageShortPrice;
         uint128 collectedFee;
-        uint256 deduct; // debt of a non-stable coin = PRE_MINED - Σ_chains deduct
+        uint256 deduct;
     }
 
     struct DexConfig {
